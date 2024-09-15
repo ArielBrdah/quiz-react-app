@@ -6,20 +6,38 @@ function Quiz({questions}) {
     const [hoverOption, setHoverOption] = useState(null)
     const [selectedOption, setSelectedOption] = useState(null)
     const [step, setStep] = useState(0)
+    const [buttonText, setButtonText] = useState("Submit Answer")
 
     const imgIndex = ['A', 'B', 'C', 'D'];
 
     const enterSelection = (index) => {
+        if(buttonText === "Next Question") return;
         return () => setHoverOption(index)
     }
 
 
     const leaveSelection = (index) => {
+
+        if(buttonText === "Next Question") return;
         return () => setHoverOption()
     }
 
     const selectOption = (index) => {
+
+        if(buttonText === "Next Question") return;
         return () => setSelectedOption(index)
+    }
+
+    const checkAnswer = () => {
+        if(buttonText === "Next Question") {
+            setStep(step + 1)
+
+            setButtonText("Submit Answer");
+            setSelectedOption(null);
+            return;
+        }
+        setButtonText("Next Question");
+
     }
 
 
@@ -43,18 +61,27 @@ function Quiz({questions}) {
 
             <div className="col-lg-6 cards-list d-flex flex-column justify-content-center " style={{gap: "24px"}}>
                 {question.options.map((option, optionIndex) => (
-                    <div onMouseEnter={enterSelection(option+optionIndex)} onMouseLeave={leaveSelection(option+optionIndex)} onClick={selectOption(option+optionIndex)} key={option+optionIndex} className={`${theme === "dark" ? "custom-bg-dark" : "bg-white"} card rounded-4 border-0 shadow d-flex flex-row align-items-center border border-2 border-primary ${selectedOption === option+optionIndex ? "selected-option" : ""}`} role="button" style={{height: "96px", gap: "32px", paddingLeft: "20px", paddingRight: "20px"}}>
-                        <div data-bs-theme={theme} className={` img-wrapper rounded d-flex align-items-center justify-content-center ${hoverOption === option+optionIndex ? "text-primary" : "bg-light"}`} style={{minHeight: "56px", minWidth: "56px", color: "#626C7F", backgroundColor: hoverOption === option+optionIndex ? "#F6E7FF" : ""}}>
-                            <p className={`d-flex align-items-center justify-content-center m-0 fw-medium`} style={{minHeight: "40px", minWidth: "40px", fontSize: "28px"}}>{imgIndex[optionIndex]}</p>                        </div>
-                        <div data-bs-theme={theme} className='m-0'>
-                            <h4 className='m-0'>{option}</h4>
-                        </div>
-                        <div className="icon-wrapper d-none">
-                            {option === question.answer ? <img src={"../assets/images/icon-correct.svg"} alt="correct" /> : <img src={"../assets/images/icon-incorrect.svg"} alt="incorrect" />}
-                        </div>
+                    <div onMouseEnter={enterSelection(option+optionIndex)} onMouseLeave={leaveSelection(option+optionIndex)} onClick={selectOption(option+optionIndex)} key={option+optionIndex} 
+                    className={`${theme === "dark" ? "custom-bg-dark" : "bg-white"}
+                   
+                    ${((selectedOption === (option+optionIndex)) && (option !== question.answer) && (buttonText === "Next Question")) ? "bad-answer" : ""}
+                    ${((selectedOption === (option+optionIndex)) && (option === question.answer) && (buttonText === "Next Question")) ? "correct-answer" : ""}
+                    
+                    
+                    card rounded-4 border-0 shadow d-flex flex-row align-items-center justify-content-between border border-2 border-primary ${selectedOption === option+optionIndex ? "selected-option" : ""}`} role="button" style={{height: "96px", gap: "32px", paddingLeft: "20px", paddingRight: "20px"}}>
+                            <div data-bs-theme={theme} className={` img-wrapper rounded d-flex align-items-center justify-content-center ${hoverOption === option+optionIndex ? "text-primary" : "bg-light"}`} style={{minHeight: "56px", minWidth: "56px", color: "#626C7F", backgroundColor: hoverOption === option+optionIndex ? "#F6E7FF" : ""}}>
+                                <p className={`d-flex align-items-center justify-content-center m-0 fw-medium`} style={{minHeight: "40px", minWidth: "40px", fontSize: "28px"}}>{imgIndex[optionIndex]}</p>
+                            </div>
+                            <div className="text-start w-100 m-0">
+                                <p className="m-0" style={{fontSize: "28px", lineHeight: "100%", fontWeight: "400"}}>{option}</p>
+                            </div>
+                            <div data-bs-theme={theme} className={`icon-wrapper ${(selectedOption === option+optionIndex && buttonText == "Next Question") || (option === question.answer && buttonText == "Next Question") ? "show" : "visually-hidden"}`} >
+                                <span>&nbsp;</span>
+                                { option === question.answer ? <img className={`answer-icon `} src={"/src/assets/images/icon-correct.svg"} alt="correct" /> : <img className={`answer-icon `}  src={"/src/assets/images/icon-incorrect.svg"} alt="incorrect" />}
+                            </div>
                     </div>
                 ))}
-                <button className={`btn btn-primary fw-semibold ${selectedOption !== null ? "" : "disabled"}`} style={{width: "100%", height: "92px", borderRadius: "24px", fontSize: "28px", lineHeight: "100%"}}>Submit Answer</button>
+                <button onClick={checkAnswer} className={`btn btn-primary fw-semibold ${selectedOption !== null ? "" : "disabled"}`} style={{width: "100%", height: "92px", borderRadius: "24px", fontSize: "28px", lineHeight: "100%"}}>{buttonText}</button>
             </div>
           </main>
         ))}
