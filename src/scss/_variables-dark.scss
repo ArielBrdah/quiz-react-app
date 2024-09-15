@@ -41,9 +41,9 @@ $dark-border-subtle-dark:           $gray-800 !default;
 // scss-docs-end theme-border-subtle-dark-variables
 
 $body-color-dark:                   $gray-300 !default;
-$body-bg-dark:                      $gray-900 !default;
+$body-bg-dark:                      #313E51 !default; //$gray-900 !default;
 $body-secondary-color-dark:         rgba($body-color-dark, .75) !default;
-$body-secondary-bg-dark:            $gray-800 !default;
+$body-secondary-bg-dark:            #3B4D66 !default; //$gray-800 !default;
 $body-tertiary-color-dark:          rgba($body-color-dark, .5) !default;
 $body-tertiary-bg-dark:             mix($gray-800, $gray-900, 50%) !default;
 $body-emphasis-color-dark:          $white !default;
@@ -56,7 +56,9 @@ $code-color-dark:                   tint-color($code-color, 40%) !default;
 $mark-color-dark:                   $body-color-dark !default;
 $mark-bg-dark:                      $yellow-800 !default;
 
-
+.custom-bg-dark {
+    background-color: $body-secondary-bg-dark !important;
+  }
 //
 // Forms
 //
