@@ -31,7 +31,7 @@ function StartQuiz() {
             {
               [{id:'HTML',bgCard: "#FFF1E9", icon: iconHTML}, {id:'CSS',bgCard: "#E0FDEF", icon: iconCSS}, {id:'JavaScript',bgCard: "#EBF0FF", icon: iconJavaScript}, {id:'Accessibility',bgCard: "#F6E7FF", icon: iconAccessibility  }].map((subject) => {
                 return (
-                  <div key={subject.id} onClick={() => handleQuiz(subject.id, `/src/assets/images/icon-${subject.id.toLowerCase()}.svg`, subject.bgCard)} className={` ${theme === "dark" ? "custom-bg-dark" : "bg-white" } card rounded-4 border-0 shadow d-flex flex-row align-items-center border border-2 border-primary`} role="button" style={{height: "96px", gap: "32px", paddingLeft: "20px", paddingRight: "20px"}}>
+                  <div key={subject.id} onClick={() => handleQuiz(subject.id, subject.icon, subject.bgCard)} className={` ${theme === "dark" ? "custom-bg-dark" : "bg-white" } card rounded-4 border-0 shadow d-flex flex-row align-items-center border border-2 border-primary`} role="button" style={{height: "96px", gap: "32px", paddingLeft: "20px", paddingRight: "20px"}}>
                     <div className="img-wrapper rounded d-flex align-items-center justify-content-center" style={{height: "56px", width: "56px", backgroundColor: subject.bgCard}}>
                       <img className='rounded' src={subject.icon} alt={subject.id} style={{height: "40px", width: "40px"}} />
                     </div>
