@@ -10,9 +10,16 @@ function StartQuiz() {
     const {theme} = useContext(ThemeContext)
     const {quizCtx, setQuizCtx} = useContext(QuizContext)
 
-    const handleQuiz = (title, src, bgCard) => {
+    const subjectIcons = {
+      HTML: iconHTML,
+      CSS: iconCSS,
+      JavaScript: iconJavaScript,
+      Accessibility: iconAccessibility
+    }
+    const handleQuiz = (title, bgCard) => {
      
-        setQuizCtx({...quizCtx, title, srcTitle: src, bgTitle: bgCard, page: title, score: 0 })
+      console.log(src)
+        setQuizCtx({...quizCtx, title, srcTitle: subjectIcons[title], bgTitle: bgCard, page: title, score: 0 })
     }
     return (
         <main className={`container row d-flex flex-row justify-content-center ${quizCtx.page == "start" ? "" : "d-none"}`} style={{marginTop: "99px"}}>
@@ -31,7 +38,7 @@ function StartQuiz() {
             {
               [{id:'HTML',bgCard: "#FFF1E9", icon: iconHTML}, {id:'CSS',bgCard: "#E0FDEF", icon: iconCSS}, {id:'JavaScript',bgCard: "#EBF0FF", icon: iconJavaScript}, {id:'Accessibility',bgCard: "#F6E7FF", icon: iconAccessibility  }].map((subject) => {
                 return (
-                  <div key={subject.id} onClick={() => handleQuiz(subject.id, subject.icon, subject.bgCard)} className={` ${theme === "dark" ? "custom-bg-dark" : "bg-white" } card rounded-4 border-0 shadow d-flex flex-row align-items-center border border-2 border-primary`} role="button" style={{height: "96px", gap: "32px", paddingLeft: "20px", paddingRight: "20px"}}>
+                  <div key={subject.id} onClick={() => handleQuiz(subject.id, subject.bgCard)} className={` ${theme === "dark" ? "custom-bg-dark" : "bg-white" } card rounded-4 border-0 shadow d-flex flex-row align-items-center border border-2 border-primary`} role="button" style={{height: "96px", gap: "32px", paddingLeft: "20px", paddingRight: "20px"}}>
                     <div className="img-wrapper rounded d-flex align-items-center justify-content-center" style={{height: "56px", width: "56px", backgroundColor: subject.bgCard}}>
                       <img className='rounded' src={subject.icon} alt={subject.id} style={{height: "40px", width: "40px"}} />
                     </div>
