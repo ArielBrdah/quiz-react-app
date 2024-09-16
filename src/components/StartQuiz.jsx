@@ -9,7 +9,7 @@ function StartQuiz() {
 
     const handleQuiz = (title, bgCard) => {
      
-      console.log(src)
+      console.log(SUBJECT_ICONS[title])
         setQuizCtx({...quizCtx, title, srcTitle: SUBJECT_ICONS[title], bgTitle: bgCard, page: title, score: 0 })
     }
     return (
@@ -27,7 +27,7 @@ function StartQuiz() {
           <div className="col-lg-6 cards-list d-flex flex-column justify-content-center " style={{gap: "24px"}}>
             
             {
-              [{id:'HTML',bgCard: "#FFF1E9", icon: iconHTML}, {id:'CSS',bgCard: "#E0FDEF", icon: iconCSS}, {id:'JavaScript',bgCard: "#EBF0FF", icon: iconJavaScript}, {id:'Accessibility',bgCard: "#F6E7FF", icon: iconAccessibility  }].map((subject) => {
+              [{id:'HTML',bgCard: "#FFF1E9"}, {id:'CSS',bgCard: "#E0FDEF"}, {id:'JavaScript',bgCard: "#EBF0FF"}, {id:'Accessibility',bgCard: "#F6E7FF"}].map((subject) => {
                 return (
                   <div key={subject.id} onClick={() => handleQuiz(subject.id, subject.bgCard)} className={` ${theme === "dark" ? "custom-bg-dark" : "bg-white" } card rounded-4 border-0 shadow d-flex flex-row align-items-center border border-2 border-primary`} role="button" style={{height: "96px", gap: "32px", paddingLeft: "20px", paddingRight: "20px"}}>
                     <div className="img-wrapper rounded d-flex align-items-center justify-content-center" style={{height: "56px", width: "56px", backgroundColor: subject.bgCard}}>
