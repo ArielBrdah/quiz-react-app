@@ -24,7 +24,6 @@ function NavBar() {
 
   return (
     <>
-    {quizCtx.srcTitle}
       <div className="container" style={{paddingTop: "97px"}}>
         <nav className="nav">
         <div className={`brand rounded-4 d-flex align-items-center justify-content-center ${ (quizCtx.page == "start") ? "d-none" : ""}`} style={{gap: "16px"}} >
