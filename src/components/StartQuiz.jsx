@@ -9,8 +9,9 @@ function StartQuiz() {
 
     const handleQuiz = (title, bgCard) => {
      
-      console.log(SUBJECT_ICONS[title])
-        setQuizCtx({...quizCtx, title, srcTitle: SUBJECT_ICONS[title], bgTitle: bgCard, page: title, score: 0 })
+      const icon = SUBJECT_ICONS[title]
+      console.log({icon})
+        setQuizCtx({...quizCtx, title, srcTitle: icon, bgTitle: bgCard, page: title, score: 0 })
     }
     return (
         <main className={`container row d-flex flex-row justify-content-center ${quizCtx.page == "start" ? "" : "d-none"}`} style={{marginTop: "99px"}}>
