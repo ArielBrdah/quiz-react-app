@@ -26,7 +26,7 @@ function NavBar() {
     <>
       <div className="container" style={{paddingTop: "97px"}}>
         <nav className="nav">
-        <div className={`brand rounded-4 d-flex align-items-center justify-content-center ${quizCtx.page == "start" ? "d-none" : ""}`} style={{gap: "16px"}} >
+        <div className={`brand rounded-4 d-flex align-items-center justify-content-center ${ (quizCtx.page == "start") ? "d-none" : ""}`} style={{gap: "16px"}} >
           <div className="brand-content rounded-2 d-flex align-items-center justify-content-center" style={{height: "56px", width: "56px" ,backgroundColor: quizCtx.bgTitle}}>
             <img src={quizCtx.srcTitle} alt="logo" />
           </div>

@@ -1,5 +1,6 @@
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { ThemeContext } from "../providers/ThemeProvider.jsx"
+import { QuizContext } from "../providers/QuizProvider.jsx"
 
 function Quiz({questions}) {
     const {theme} = useContext(ThemeContext)
@@ -7,37 +8,53 @@ function Quiz({questions}) {
     const [selectedOption, setSelectedOption] = useState(null)
     const [step, setStep] = useState(0)
     const [buttonText, setButtonText] = useState("Submit Answer")
-
+    const {quizCtx, setQuizCtx} = useContext(QuizContext)
+    const [isRight, setIsRight] = useState(null)
     const imgIndex = ['A', 'B', 'C', 'D'];
 
+    
+    useEffect(() => {
+        setQuizCtx({...quizCtx, length: questions.length})
+    }, [])
+
+  
     const enterSelection = (index) => {
         if(buttonText === "Next Question") return;
         return () => setHoverOption(index)
     }
 
-
     const leaveSelection = (index) => {
 
         if(buttonText === "Next Question") return;
-        return () => setHoverOption()
+        return () => setHoverOption(null)
     }
 
-    const selectOption = (index) => {
+    const selectOption = (index, option, answer) => {
 
         if(buttonText === "Next Question") return;
-        return () => setSelectedOption(index)
+        return () => {
+            setSelectedOption(index)
+            setIsRight((option == answer))
+        }
     }
 
     const checkAnswer = () => {
+        console.log(isRight)
         if(buttonText === "Next Question") {
+            if(step == 9) { 
+                    setQuizCtx({...quizCtx, page: "result", score: quizCtx.score})
+                    setStep(0)
+            }
             setStep(step + 1)
+            if(isRight) setQuizCtx(prevCtx => ({...prevCtx, score: (quizCtx.score + 1)}))
 
+            setIsRight(false)
             setButtonText("Submit Answer");
             setSelectedOption(null);
             return;
         }
         setButtonText("Next Question");
-
+        console.log(quizCtx.score)
     }
 
 
@@ -46,8 +63,8 @@ function Quiz({questions}) {
         <>
         {questions.map((question, index) => (
           <main key={index} className={`container row d-flex flex-row justify-content-center ${ step === index ? "" : "d-none"}`} style={{marginTop: "99px"}}>
-            <div className='col-lg-6 d-flex flex-column justify-content-between' style={{maxHeight: "452px"}}>
-                <div className='d-flex flex-column justify-content-lg-start align-items-lg-start' style={{gap: "27px"}}>
+            <div className='mb-5 col-lg-6 d-flex flex-column justify-content-between' style={{maxHeight: "452px"}}>
+                <div className='mb-4 d-flex flex-column justify-content-lg-start align-items-lg-start' style={{gap: "27px"}}>
                     <p className="fst-italic">Question {index + 1} of {questions.length}.</p>
                     <div data-bs-theme={theme} className='lh-1'>
                         <h2 style={{fontSize: "36px", lineHeight: "100%", color: theme === "dark" ? "white" : "#313E51"}} className='h1 fw-semibold'>{question.question}</h2>
@@ -61,7 +78,7 @@ function Quiz({questions}) {
 
             <div className="col-lg-6 cards-list d-flex flex-column justify-content-center " style={{gap: "24px"}}>
                 {question.options.map((option, optionIndex) => (
-                    <div onMouseEnter={enterSelection(option+optionIndex)} onMouseLeave={leaveSelection(option+optionIndex)} onClick={selectOption(option+optionIndex)} key={option+optionIndex} 
+                    <div onMouseEnter={enterSelection(option+optionIndex)} onMouseLeave={leaveSelection(option+optionIndex)} onClick={selectOption(option+optionIndex, option, question.answer)} key={option+optionIndex} 
                     className={`${theme === "dark" ? "custom-bg-dark" : "bg-white"}
                    
                     ${((selectedOption === (option+optionIndex)) && (option !== question.answer) && (buttonText === "Next Question")) ? "bad-answer" : ""}

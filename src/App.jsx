@@ -7,6 +7,7 @@ import StartQuiz from './components/StartQuiz.jsx'
 import Quiz from './components/Quiz.jsx'
 import quizData from './assets/data.json'
 import { QuizContext } from './providers/QuizProvider.jsx'
+import ResultQuiz from './components/ResultQuiz.jsx'
 
 function App() {
 
@@ -19,12 +20,13 @@ function App() {
       <div className="container z-3">
         <NavBar />
         {quizCtx.page == "start" ? <StartQuiz /> : ""}
+        {quizCtx.page == "result" ? <ResultQuiz /> : ""}
         {
           quizData.quizzes.map((quiz, index) => {
             console.log({quiz,index})
             if( quiz.title == quizCtx.title ){
               return (
-                <div key={index} className={`${quizIndex == index ? "" : "d-none"}`}>
+                <div key={index} className={`${quiz.title == quizCtx.title ? "" : "d-none"}`}>
                   <Quiz key={index} questions={quiz.questions} />
                 </div>
               )

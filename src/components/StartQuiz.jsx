@@ -8,7 +8,7 @@ function StartQuiz() {
 
     const handleQuiz = (title, src, bgCard) => {
      
-        setQuizCtx({...quizCtx, title, srcTitle: src, bgTitle: bgCard, page: title })
+        setQuizCtx({...quizCtx, title, srcTitle: src, bgTitle: bgCard, page: title, score: 0 })
     }
     return (
         <main className={`container row d-flex flex-row justify-content-center ${quizCtx.page == "start" ? "" : "d-none"}`} style={{marginTop: "99px"}}>
