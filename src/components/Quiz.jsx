@@ -1,6 +1,8 @@
 import { useContext, useEffect, useState } from "react"
 import { ThemeContext } from "../providers/ThemeProvider.jsx"
 import { QuizContext } from "../providers/QuizProvider.jsx"
+import incorrectIcon from '@assets/images/icon-incorrect.svg'
+import correctIcon from '@assets/images/icon-correct.svg'
 
 function Quiz({questions}) {
     const {theme} = useContext(ThemeContext)
@@ -94,7 +96,7 @@ function Quiz({questions}) {
                             </div>
                             <div data-bs-theme={theme} className={`icon-wrapper ${(selectedOption === option+optionIndex && buttonText == "Next Question") || (option === question.answer && buttonText == "Next Question") ? "show" : "visually-hidden"}`} >
                                 <span>&nbsp;</span>
-                                { option === question.answer ? <img className={`answer-icon `} src={"/src/assets/images/icon-correct.svg"} alt="correct" /> : <img className={`answer-icon `}  src={"/src/assets/images/icon-incorrect.svg"} alt="incorrect" />}
+                                { option === question.answer ? <img className={`answer-icon `} src={correctIcon} alt="correct" /> : <img className={`answer-icon `}  src={incorrectIcon} alt="incorrect" />}
                             </div>
                     </div>
                 ))}
